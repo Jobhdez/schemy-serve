@@ -1,0 +1,6 @@
+== Linear algebra to C compiler ==
+
+User stories, i.e. user requirements (needs + wants)
+    As a user I want to generate a c linear algebra function from
+    a high level description so that i can have better performance and
+    not have to learn C.
