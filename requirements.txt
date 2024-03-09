@@ -1,0 +1,11 @@
+django
+djangorestframework
+celery
+python-dotenv
+daphne
+django-debug-toolbar
+redis
+ply
+pymemcache
+channels
+requests
