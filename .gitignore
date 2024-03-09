@@ -1,3 +1,5 @@
 compute/
 *~
 src.egg-info/
+*.out
+__pycache__/
