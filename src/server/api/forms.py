@@ -28,18 +28,6 @@ class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
-class LinearAlgebraCompilerForm(forms.Form):
-    class Meta:
-        model = LinearAlgebraCompiler
-        fields = ['input_expression']
-
-class LinearAlgebraInterpreterForm(forms.Form):
-    class Meta:
-        model = LinearAlgebraInterpreter
-        fields = ['input_expression']
-
-class SchemeInterpreterForm(forms.Form):
-    class Meta:
-        model = SchemeInterpreter
-        fields = ['input_expression']
+class CompilerForm(forms.Form):
+    input_expression = forms.CharField()
 
