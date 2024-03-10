@@ -1,4 +1,4 @@
-from src.interpreter.parser import (
+from .parser import (
     Exps,
     Exp,
     Vec,
@@ -12,8 +12,8 @@ from src.interpreter.parser import (
     Element,
     Vectors,
 )
-from src.interpreter.utils import get_vector_elements, get_matrix_elements
-from src.interpreter.linear_algebra import V, Mat
+from .utils import get_vector_elements, get_matrix_elements
+from .linear_algebra import V, Mat
 
 
 """Module corresponding to the basic linear algebra interpreter. It supports basic linear algebra

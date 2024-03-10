@@ -1,6 +1,6 @@
 import ply.lex as lex
 import ply.yacc as yacc
-from scheme_interp.nodes import (
+from .nodes import (
     Program,
     Nil,
     Exps,

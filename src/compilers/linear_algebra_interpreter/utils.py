@@ -1,4 +1,4 @@
-from src.interpreter.parser import (
+from .parser import (
     Elements,
     Element,
     Vec,

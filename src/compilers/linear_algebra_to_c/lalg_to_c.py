@@ -1,4 +1,4 @@
-from ast_to_lalg import (
+from .ast_to_lalg import (
     LalgInt,
     LalgVec,
     LalgMatrix,
