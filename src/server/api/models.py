@@ -10,7 +10,7 @@ class Compiler(models.Model):
 
     input_expression = models.CharField(max_length=200)
     output_expression = models.CharField(max_length=200)
-    price = models.CharField(max_length=100)
+    #price = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
