@@ -6,12 +6,25 @@ from src.compilers.linear_algebra_to_c.ast_to_lalg import ast_to_lalg
 from src.compilers.linear_algebra_to_c.lalg_to_c import lalg_to_c
 from src.compilers.scm_interpreter.parser import parser as scmparser
 from src.compilers.scm_interpreter.interp import interp
+# models
+from .models import (
+    LinearAlgebraCompiler,
+    LinearAlgebraInterpreter,
+    SchemeInterpreter,
+    )
 # djangorestframework api
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+# django api
+from django.contrib.auth import (
+    authenticate,
+    login,
+    get_user_model,
+    )
 # models
 #...
 # forms
 #...
+User = get_user_model()
