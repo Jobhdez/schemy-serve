@@ -107,7 +107,7 @@ def p_elements_int(p):
 def p_error(p):
     print("Syntax error at '%s'" % p.value)
     
-parser = yacc.yacc()
+cparser = yacc.yacc()
 
 ###-------------------
 ###  AST NODES

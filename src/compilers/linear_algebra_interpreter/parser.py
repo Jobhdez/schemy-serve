@@ -38,18 +38,10 @@ def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
     
-lexer = lex.lex()
+lalg_lexer = lex.lex()
 
 
 ### Grammar
-
-def p_program(p):
-    "expressions : expression expressions"
-    p[0] = Exps(p[1], p[2])
-
-def p_program_empty(p):
-    "expressions : expression"
-    p[0] = Exp(p[1])
 
 def p_expression_int(p):
     "expression : INTEGER"
@@ -105,7 +97,7 @@ def p_elements_int(p):
     p[0] = Element(p[1])
 
 
-parser = yacc.yacc()
+lalg_parser = yacc.yacc()
 
 ###-------------------
 ###  AST NODES

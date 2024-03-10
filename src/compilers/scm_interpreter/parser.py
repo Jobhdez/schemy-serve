@@ -83,7 +83,7 @@ def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
     
-lexer = lex.lex()
+scmlexer = lex.lex()
 
 def p_program(p):
     "expressions : expression expressions"
@@ -172,4 +172,4 @@ def p_params_single(p):
 def p_error(p):
     print("Syntax error at '%s'" % p.value)
                  
-parser = yacc.yacc()
+scmparser = yacc.yacc()
