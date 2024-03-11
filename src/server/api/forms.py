@@ -1,9 +1,5 @@
 from django import forms
-from .models import (
-    LinearAlgebraCompiler,
-    LinearAlgebraInterpreter,
-    SchemeInterpreter,
-    )
+from .models import SchemeInterpreter
 from django.contrib.auth import get_user_model
 User = get_user_model()
 

@@ -17,16 +17,6 @@ class Compiler(models.Model):
     class Meta:
         ordering = ['created']
 
-class LinearAlgebraInterpreter(Compiler):
-
-    def __str__(self):
-        return f'Linear Algebra Interpreter with input {self.input_expression} and evaluated code {self.output_expression}'
-
-class LinearAlgebraCompiler(Compiler):
-
-    def __str__(self):
-        return f'Linear Algebra Compiler with input {self.input_expression} and generated C code {self.output_expression}'
-
 class SchemeInterpreter(Compiler):
 
     def __str__(self):

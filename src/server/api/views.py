@@ -1,41 +1,21 @@
-# compiler and interpreter api
-##from src.compilers.linear_algebra_interpreter.parser import lalg_parser
-#from src.compilers.linear_algebra_interpreter.interpreter import evaluate
-#from src.compilers.linear_algebra_to_c.parser import cparser
-#from src.compilers.linear_algebra_to_c.ast_to_lalg import ast_to_lalg
-#from src.compilers.linear_algebra_to_c.lalg_to_c import lalg_to_c
 from src.compilers.scm_interpreter.parser import scmparser 
 from src.compilers.scm_interpreter.interp import interp
-# models
-from .models import (
-    LinearAlgebraCompiler,
-    LinearAlgebraInterpreter,
-    SchemeInterpreter,
-    )
-# djangorestframework api
+from .models import SchemeInterpreter
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-# django api
 from django.contrib.auth import (
     authenticate,
     login,
     get_user_model,
     )
-
-# forms
 from .forms import (
     CompilerForm,
     UserRegistrationForm,
     UploadSchemeFile,
     )
-# serializers
-from .serializers import (
-    LinearAlgebraInterpSerializer,
-    LinearAlgebraCompilerSerializer,
-    SchemeInterpSerializer,
-    )
+from .serializers import SchemeInterpSerializer
 import io
 User = get_user_model()
 
@@ -123,46 +103,3 @@ def scheme_expression(request, id):
     exp = usr.scm_interp_exps.get(id=id)
     serializer = SchemeInterpSerializer(exp)
     return Response(serializer.data)
-
-"""
-@api_view(['POST'])
-@login_required(login_url='/api/login')
-def linear_algebra_compiler(request):
-    form = CompilerForm(request.POST)
-    if form.is_valid():
-        data = form.cleaned_data
-        exp = data['input_expression']
-        parsed_exp = cparser.parse(exp)
-        ir = ast_to_lalg(parsed_exp)
-        
-        compilation = lalg_to_c(parsed_exp)
-        lalg_model = LinearAlgebraCompiler(input_expression=data['input_expression'], output_expression=evaluation)
-        lalg_model.save()
-        user = request.user
-        user.lalg_compile_exps.add(lalg_model)
-        serializer = LinearAlgebraCompilerSerializer(lalg_model)
-        return Response(serializer.data)
-    return Response({'form':'invalid'})
-        
-"""
-"""
-@api_view(['POST'])
-@login_required(login_url='/api/login')
-def linear_algebra_interp(request):
-    form = CompilerForm(request.POST)
-    if form.is_valid():
-        data = form.cleaned_data
-        exp = data['input_expression']
-        parsed_exp = lalg_parser.parse(exp)
-        print(parsed_exp)
-        evaluation = str(evaluate(parsed_exp))
-        print(evaluation)
-        lalg_model = LinearAlgebraInterpreter(input_expression=data['input_expression'], output_expression=evaluation)
-        lalg_model.save()
-        user = request.user
-        user.lalg_interp_exps.add(lalg_model)
-        serializer = LinearAlgebraInterpSerializer(lalg_model)
-        return Response(serializer.data)
-    return Response({'form':'invalid'})
-        
-"""
