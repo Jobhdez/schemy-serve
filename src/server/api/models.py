@@ -2,10 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
-    lalg_interp_exps = models.ManyToManyField("LinearAlgebraInterpreter")
-    lalg_compile_exps = models.ManyToManyField("LinearAlgebraCompiler")
     scm_interp_exps = models.ManyToManyField("SchemeInterpreter")
     
+    class Meta:
+        app_label = 'api'
+        
 class Compiler(models.Model):
 
     input_expression = models.CharField(max_length=200)
