@@ -31,3 +31,5 @@ class LoginForm(forms.Form):
 class CompilerForm(forms.Form):
     input_expression = forms.CharField()
 
+class UploadSchemeFile(forms.Form):
+    scm_file = forms.FileField()
