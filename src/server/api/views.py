@@ -67,17 +67,10 @@ def scheme_interpreter(request):
 @login_required(login_url='/api/login')
 def evaluate_scm_from_file(request):
     form = UploadSchemeFile(request.POST, request.FILES)
-    print("form data:", request.POST)
-    print("files:", request.FILES)
-    #if form.is_valid():
     scm_file = request.FILES['scm_file']
-    print(type(scm_file))
     scm_exp = scm_file.file
-    print(type(scm_exp))
     bytes_data = scm_exp
-   # print(type(bytes_data))
     scm_exp = bytes_data.read().decode('utf-8')
-   # decoded_text = bytes_data.decode('utf-8')
     parsed_exp = scmparser.parse(scm_exp)
     evaluation = interp(parsed_exp)
     scm_model = SchemeInterpreter(input_expression=scm_exp, output_expression=evaluation)
@@ -86,7 +79,6 @@ def evaluate_scm_from_file(request):
     user.scm_interp_exps.add(scm_model)
     serializer = SchemeInterpSerializer(scm_model)
     return Response(serializer.data)
-    ###return Response({"invalid": "form"})
 
 @api_view(['GET'])
 @login_required(login_url='/api/login')
