@@ -8,5 +8,6 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('scm_exps/', views.scheme_interpreter, name='scm_exps'),
     path('scm_uploads/', views.evaluate_scm_from_file, name='upload_scm'),
-    path('scm_expressions/', views.scheme_expressions, name='scm_exprs'),        path('scm_exp/<int:id>/', views.scheme_expression, name='scm_exp'),
+    path('scm_expressions/', views.scheme_expressions, name='scm_exprs'),        
+    path('scm_exp/<int:id>/', views.scheme_expression, name='scm_exp'),
     ]
