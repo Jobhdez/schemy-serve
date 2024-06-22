@@ -3,3 +3,4 @@ compute/
 src.egg-info/
 *.out
 __pycache__/
+migrations/
