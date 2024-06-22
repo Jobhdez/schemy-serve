@@ -1,6 +1,6 @@
 from src.compilers.scm_interpreter.parser import scmparser 
 from src.compilers.scm_interpreter.interp import interp
-from .models import SchemeInterpreter
+from .models import SchemeInterpreter, Challenges
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
@@ -14,8 +14,9 @@ from .forms import (
     CompilerForm,
     UserRegistrationForm,
     UploadSchemeFile,
+    ChallengesForm,
     )
-from .serializers import SchemeInterpSerializer
+from .serializers import SchemeInterpSerializer, ChallengesSerializer
 import io
 User = get_user_model()
 
@@ -95,3 +96,22 @@ def scheme_expression(request, id):
     exp = usr.scm_interp_exps.get(id=id)
     serializer = SchemeInterpSerializer(exp)
     return Response(serializer.data)
+
+@api_view(['POST'])
+@login_required(login_url='/api/login')
+def challenge(request):
+  form = ChallengesForm(request.POST)
+  if form.is_valid():
+    data = form.cleaned_data
+    challenge = Challenges(problem_statement=data["problem_statement"], solution=data["solution"])
+    challenge.save()
+    user = request.user 
+    user.challenges.add(challenge)
+
+    return Response({"challenge": "created"}, status=200)
+
+@api_view(['GET'])
+def challenge_listing(request):
+  challenges = Challenge.objects.all()
+  serializer = ChallengesSerializer(challenges)
+  return Response(serializer.data)
