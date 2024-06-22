@@ -1,5 +1,5 @@
 from django import forms
-from .models import SchemeInterpreter
+from .models import SchemeInterpreter, Challenges
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -29,3 +29,7 @@ class CompilerForm(forms.Form):
 
 class UploadSchemeFile(forms.Form):
     scm_file = forms.FileField()
+
+class ChallengesForm(forms.ModelForm):
+  problem_statement = forms.CharField()
+  solution = forms.CharField()
