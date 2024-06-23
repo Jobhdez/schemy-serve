@@ -23,7 +23,7 @@ class SchemeInterpreter(Compiler):
         return f'The Scheme expression {self.input_expression} is evaluated to {self.output_expression}'
 
 class Challenges(models.Model):
-  problem_statements = models.TextField()
+  problem_statement = models.TextField()
   solution = models.TextField()
   created = models.DateTimeField(auto_now_add=True)
 
