@@ -18,3 +18,7 @@ def challenges(url):
   re = requests.get(url)
   return re.json()
 
+def user_challenges(url, username, password):
+  url = url + 'users/challenges/'
+  return requests.get(url, auth=(username, password)).json()
+                      
