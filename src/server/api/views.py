@@ -1,6 +1,6 @@
 from src.compilers.scm_interpreter.parser import scmparser 
 from src.compilers.scm_interpreter.interp import interp
-from .models import SchemeInterpreter, Challenges
+from .models import SchemeInterpreter, Challenges, ProblemStatement, Solution
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
@@ -16,7 +16,7 @@ from .forms import (
     UploadSchemeFile,
     ChallengesForm,
     )
-from .serializers import SchemeInterpSerializer, ChallengesSerializer
+from .serializers import SchemeInterpSerializer, ChallengesSerializer, ProblemStatementSerializer, SolutionSerializer
 import io
 User = get_user_model()
 
@@ -103,15 +103,44 @@ def challenge(request):
   form = ChallengesForm(request.POST)
   if form.is_valid():
     data = form.cleaned_data
-    challenge = Challenges(problem_statement=data["problem_statement"], solution=data["solution"])
+    challenge = Challenges(name=data["name"])
+    challenge.save()
+    problem = ProblemStatement(problem_statement=data['problem_statement'])
+    problem.save()
+    challenge.problem_statement.add(problem)
+    solution = Solution(solution=data['solution'])
+    solution.save()
+    challenge.solution.add(solution)
     challenge.save()
     user = request.user 
     user.challenges.add(challenge)
 
+    user.save()
     return Response({"challenge": "created"}, status=200)
 
+def add_problem(request):
+  form = ProblemForm(request.POST)
+  if form.is_valid():
+    data = form.cleaned_data
+    challenge = request.user.challenges.objects.get(id=data['id'])
+    challenge_problem = challenge.problem_statements.add(ProblemStatement(data['problem']))
+    challenge_solution = challenge.solutions.add(Solution(data['solution']))
+    return Response({"problem-solution": "added"}, status=200)
+                                                 
+                                                         
 @api_view(['GET'])
 def challenge_listing(request):
   challenges = Challenges.objects.all()
   serializer = ChallengesSerializer(challenges, many=True)
   return Response(serializer.data)
+
+@api_view(['GET'])
+@login_required(login_url='/api/login')
+def user_challenges(request):
+  user = request.user
+  challenges = user.challenges.all()
+  return Response(ChallengesSerializer(challenges, many=True).data)
+  
+#to do
+# challenge_detail
+# challege_delete
