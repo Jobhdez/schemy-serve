@@ -33,3 +33,4 @@ class UploadSchemeFile(forms.Form):
 class ChallengesForm(forms.Form):
   problem_statement = forms.CharField()
   solution = forms.CharField()
+  name = forms.CharField()
