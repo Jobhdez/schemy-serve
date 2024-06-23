@@ -30,6 +30,6 @@ class CompilerForm(forms.Form):
 class UploadSchemeFile(forms.Form):
     scm_file = forms.FileField()
 
-class ChallengesForm(forms.ModelForm):
+class ChallengesForm(forms.Form):
   problem_statement = forms.CharField()
   solution = forms.CharField()
