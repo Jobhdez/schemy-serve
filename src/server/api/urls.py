@@ -12,4 +12,5 @@ urlpatterns = [
     path('scm_exp/<int:id>/', views.scheme_expression, name='scm_exp'),
     path('challenge/', views.challenge, name='challenge'),
     path('challenges/', views.challenge_listing, name='challenges'),
+    path('users/challenges/', views.user_challenges, name='user_challenges'),
     ]
