@@ -9,4 +9,4 @@ class SchemeInterpSerializer(serializers.ModelSerializer):
 class ChallengesSerializer(serializers.ModelSerializer):
   class Meta:
     model = Challenges
-    fields = ['problem_statement', 'solution']
+    fields = ['problem_statement', 'solution', 'created']
