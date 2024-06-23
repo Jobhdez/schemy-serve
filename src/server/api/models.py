@@ -23,13 +23,32 @@ class SchemeInterpreter(Compiler):
         return f'The Scheme expression {self.input_expression} is evaluated to {self.output_expression}'
 
 class Challenges(models.Model):
-  problem_statement = models.TextField()
-  solution = models.TextField()
+  problem_statement = models.ManyToManyField("ProblemStatement")
+  solution = models.ManyToManyField("Solution")
   created = models.DateTimeField(auto_now_add=True)
-
+  name = models.CharField(max_length=200)
   class Meta:
     ordering = ['created']
+    
+  def __str__(self):
+    return f'The problem statement: {self.name}'
+
+class ProblemStatement(models.Model):
+  problem_statement = models.TextField()
+  created = models.DateTimeField(auto_now_add=True)
+  class Meta:
+    ordering=['created']
 
   def __str__(self):
-    return f'The problem statement: {self.problem_statement} has the corresponding solution: {self.solution}'
+    return f'the problem statement: {self.problem_statement}'
+
+
+class Solution(models.Model):
+  solution = models.TextField()
+  created = models.DateTimeField(auto_now_add=True)
+  class Meta:
+    ordering=['created']
+
+  def __str__(self):
+    return f'the solution: {self.problem_statement}'
 
