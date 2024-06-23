@@ -112,6 +112,6 @@ def challenge(request):
 
 @api_view(['GET'])
 def challenge_listing(request):
-  challenges = Challenge.objects.all()
-  serializer = ChallengesSerializer(challenges)
+  challenges = Challenges.objects.all()
+  serializer = ChallengesSerializer(challenges, many=True)
   return Response(serializer.data)
