@@ -39,3 +39,8 @@ class ProblemForm(forms.Form):
   challenge_id = forms.CharField()
   problem = forms.CharField()
   solution = forms.CharField()
+
+
+class SchemeAppForm(forms.Form):
+  app_id = forms.CharField()
+  username = forms.CharField()
