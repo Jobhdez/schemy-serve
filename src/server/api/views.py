@@ -1,6 +1,12 @@
 from src.compilers.scm_interpreter.parser import scmparser 
 from src.compilers.scm_interpreter.interp import interp
-from .models import SchemeInterpreter, Challenges, ProblemStatement, Solution
+from .models import (
+  SchemeInterpreter,
+  Challenges,
+  ProblemStatement,
+  Solution,
+  SchemeApp,
+  )
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
@@ -16,8 +22,16 @@ from .forms import (
     UploadSchemeFile,
     ChallengesForm,
     ProblemForm,
+    SchemeAppForm,
     )
-from .serializers import SchemeInterpSerializer, ChallengesSerializer, ProblemStatementSerializer, SolutionSerializer
+from .serializers import (
+  SchemeInterpSerializer,
+  ChallengesSerializer,
+  ProblemStatementSerializer,
+  SolutionSerializer,
+  SchemeAppSerializer,
+  UserSerializer,
+  )
 import io
 User = get_user_model()
 
@@ -151,3 +165,36 @@ def user_challenges(request):
 #to do
 # challenge_detail
 # challege_delete
+
+@api_view(['POST'])
+@login_required(login_url='/api/login')
+def create_app(request):
+  scm_app = SchemeApp(owner=request.user)
+  scm_app.save()
+  return Response({"app": "created"})
+
+@api_view(['POST'])
+@login_required(login_url='/api/login')
+def add_user_to_app(request):
+  form = SchemeAppForm(request.POST)
+  if form.is_valid():
+    data = form.cleaned_data
+    app = SchemeApp.objects.get(id=data['app_id'])
+    if app.owner == request.user:
+      app_user = User.objects.get(username=data['username'])
+      app.users.add(app_user)
+      app.save()
+      return Response({"success": "user added to app"}, status=200)
+    return Response({"failure":"you need an invite"}, status=303)
+
+  return Response({"form":"invalid"})
+
+@api_view(['GET'])
+@login_required(login_url='/api/login')
+def get_app_users(request, app_id):
+                                  
+  app = SchemeApp.objects.get(id=app_id)
+  if app.owner == request.user:
+    serializer = UserSerializer(app.users, many=True)
+    return Response(serializer.data)
+  return Response({"failure": "you need to be the owner"}, status=303)
