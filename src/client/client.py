@@ -12,7 +12,17 @@ def register(url, password, username, first_name, email):
     data = {'password': password, 'password2': password, 'username':username, 'first_name': first_name, 'email': email}
     re = requests.post(link, data=data)
     return re.json()
+  
 
+def create_app(url, password, username):
+  return requests.post(url+'users/apps/', auth=(username, password)).json()
+
+def add_users_to_app(url, app_id, owner_username, owner_password, username):
+  data = {'app_id': app_id, 'username':username}
+  return requests.post(url+'users/apps/users/user/', data=data, auth=(owner_username, owner_password)).json()
+
+def get_app_users(url, owner_username, owner_password, app_id):
+  return requests.get(url+'users/apps/users/'+app_id+'/', auth=(owner_username, owner_password)).json()
   
 def challenges(url):
   re = requests.get(url)
