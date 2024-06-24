@@ -21,4 +21,9 @@ def challenges(url):
 def user_challenges(url, username, password):
   url = url + 'users/challenges/'
   return requests.get(url, auth=(username, password)).json()
-                      
+
+
+def add_problem(url, id, username, password, problem, solution):
+  data = {"challenge_id":id, "problem":problem, "solution": solution}
+  re = requests.post(url+"users/challenges/problems/", data=data, auth=(username, password))
+  return re.json()
