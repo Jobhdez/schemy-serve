@@ -34,3 +34,8 @@ class ChallengesForm(forms.Form):
   problem_statement = forms.CharField()
   solution = forms.CharField()
   name = forms.CharField()
+
+class ProblemForm(forms.Form):
+  challenge_id = forms.CharField()
+  problem = forms.CharField()
+  solution = forms.CharField()
