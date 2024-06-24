@@ -15,6 +15,7 @@ from .forms import (
     UserRegistrationForm,
     UploadSchemeFile,
     ChallengesForm,
+    ProblemForm,
     )
 from .serializers import SchemeInterpSerializer, ChallengesSerializer, ProblemStatementSerializer, SolutionSerializer
 import io
@@ -118,15 +119,21 @@ def challenge(request):
     user.save()
     return Response({"challenge": "created"}, status=200)
 
+@api_view(['POST'])
+@login_required(login_url='/api/login')
 def add_problem(request):
   form = ProblemForm(request.POST)
   if form.is_valid():
     data = form.cleaned_data
-    challenge = request.user.challenges.objects.get(id=data['id'])
-    challenge_problem = challenge.problem_statements.add(ProblemStatement(data['problem']))
-    challenge_solution = challenge.solutions.add(Solution(data['solution']))
+    challenge = request.user.challenges.get(id=data['challenge_id'])
+    problem = ProblemStatement(problem_statement=data['problem'])
+    problem.save()
+    challenge.problem_statement.add(problem)
+    solution = Solution(solution=data['solution'])
+    solution.save()
+    challenge.solution.add(solution)
+    challenge.save()
     return Response({"problem-solution": "added"}, status=200)
-                                                 
                                                          
 @api_view(['GET'])
 def challenge_listing(request):
