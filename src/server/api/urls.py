@@ -13,5 +13,8 @@ urlpatterns = [
     path('challenge/', views.challenge, name='challenge'),
     path('challenges/', views.challenge_listing, name='challenges'),
     path('users/challenges/', views.user_challenges, name='user_challenges'),
-    path('users/challenges/problems/', views.add_problem, name='user-problem'),
+    path('users/challenges/problems/', views.add_problem, name='user_problem'),
+    path('users/apps/', views.create_app, name='app'),
+    path('users/apps/users/user/', views.add_user_to_app, name='user_addition'),
+    path('users/apps/users/<int:app_id>/', views.get_app_users, name="get_app_users"),
     ]
