@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import SchemeInterpreter, Challenges, ProblemStatement, Solution, User, SchemeApp
+from .models import SchemeInterpreter, Challenges, ProblemStatement, Solution, SchemeApp
+from  django.contrib.auth import get_user_model
+User = get_user_model()
 
 class SchemeInterpSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,7 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
     model = User
     fields = ['scm_interp_exps', 'challenges', 'first_name', 'username', 'email']
 
-class AppSerializer(serializers.ModelSerializer):
+class SchemeAppSerializer(serializers.ModelSerializer):
   users = UserSerializer(many=True, read_only=True)
   owner = UserSerializer(read_only=True)
   class Meta:
