@@ -1,6 +1,6 @@
 import requests
 
-url = " http://127.0.0.1:8000/api/"
+url = "http://127.0.0.1:8000/api/"
 
 def create_challenge(url, endpoint, username, password, data):
   re = requests.post(url+endpoint, data=data, auth=(username, password))
