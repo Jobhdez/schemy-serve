@@ -185,7 +185,7 @@ def add_user_to_app(request):
       app.users.add(app_user)
       app.save()
       return Response({"success": "user added to app"}, status=200)
-    return Response({"failure":"you need an invite"}, status=303)
+    return Response({"failure":"you need to be the owner of the app"}, status=303)
 
   return Response({"form":"invalid"})
 
