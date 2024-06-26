@@ -2,18 +2,24 @@ class SDK {
   private url: string = "http://127.0.0.1:8000/api/";
   private register_url: string = "register/";
   private register_app_url: string = "users/apps/";
-  public register(
+  constructor(
     username: string,
     password: string,
     first_name: string,
     email: string,
   ) {
+    this.username = username;
+    this.password = password;
+    this.first_name = first_name;
+    this.first_name = email;
+  }
+  public register() {
     const data = new URLSearchParams();
-    data.append("password", password);
-    data.append("password2", password);
-    data.append("username", username);
-    data.append("first_name", first_name);
-    data.append("email", email);
+    data.append("password", this.password);
+    data.append("password2", this.password);
+    data.append("username", this.username);
+    data.append("first_name", this.first_name);
+    data.append("email", this.email);
 
     fetch(this.url + this.register_url, {
       method: "POST",
@@ -30,11 +36,11 @@ class SDK {
       });
   }
 
-  public register_app(username: string, password: string) {
+  public register_app() {
     fetch(this.url + this.register_app_url, {
       method: "POST",
       headers: {
-        Authorization: "Basic " + btoa(`${username}:${password}`),
+        Authorization: "Basic " + btoa(`${this.username}:${this.password}`),
       },
     })
       .then((response: Response) => response.json())
