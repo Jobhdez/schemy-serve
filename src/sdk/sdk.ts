@@ -2,6 +2,13 @@ class SDK {
   private url: string = "http://127.0.0.1:8000/api/";
   private register_url: string = "register/";
   private register_app_url: string = "users/apps/";
+  private users_to_app_url: string = "users/apps/users/user/";
+
+  private username: string;
+  private password: string;
+  private first_name: string;
+  private email: string;
+
   constructor(
     username: string,
     password: string,
@@ -11,8 +18,9 @@ class SDK {
     this.username = username;
     this.password = password;
     this.first_name = first_name;
-    this.first_name = email;
+    this.email = email;
   }
+
   public register() {
     const data = new URLSearchParams();
     data.append("password", this.password);
@@ -48,8 +56,29 @@ class SDK {
         console.log(JSON.stringify(data));
       });
   }
+
+  public add_users_to_app(app_id: string, user: string) {
+    const data = new URLSearchParams();
+    data.append("app_id", app_id);
+    data.append("username", user);
+
+    fetch(this.url + this.users_to_app_url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: "Basic " + btoa(`${this.username}:${this.password}`),
+      },
+      body: data.toString(),
+    })
+      .then((response: Response) => response.json())
+      .then((data: any) => {
+        console.log(JSON.stringify(data));
+      });
+  }
 }
 
-let sdk = new SDK();
-//sdk.register("venom", "123", "venom", "venom@gmail.com");
-sdk.register_app("venom", "123");
+let sdk = new SDK("venom", "123", "venom", "venom@gmail.com");
+// sdk.register();
+// sdk.register_app();
+sdk.add_users_to_app("2", "batman");
