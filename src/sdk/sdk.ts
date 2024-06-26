@@ -1,3 +1,5 @@
+// SDK for the Scheme interpreter and interview engine api
+
 class SDK {
   private url: string = "http://127.0.0.1:8000/api/";
   private register_url: string = "register/";
