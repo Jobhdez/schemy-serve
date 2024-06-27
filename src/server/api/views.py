@@ -155,6 +155,7 @@ def challenge_listing(request):
   serializer = ChallengesSerializer(challenges, many=True)
   return Response(serializer.data)
 
+@api_view(['GET'])
 def challenge_detail(request, id):
   return Response(ChallengesSerializer(Challeges.objects.get(id=id)).data)
 
@@ -164,9 +165,12 @@ def user_challenges(request):
   user = request.user
   challenges = user.challenges.all()
   return Response(ChallengesSerializer(challenges, many=True).data)
-  
-#to do
-# challege_delete
+
+@api_view(['DELETE'])
+@login_required(login_url='/api/login')
+def challenge_delete(request, id):
+  Challenges.objects.filter(id=id).delete()
+  return Response({"delete": "successful"})
 
 @api_view(['POST'])
 @login_required(login_url='/api/login')
