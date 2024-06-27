@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     scm_interp_exps = models.ManyToManyField("SchemeInterpreter")
     challenges = models.ManyToManyField("Challenges")
+    friends = models.ManyToManyField("User", blank=True)
     class Meta:
         app_label = 'api'
 
@@ -61,3 +62,38 @@ class Solution(models.Model):
 
     def __str__(self):
         return f'the solution: {self.solution}'
+
+class Competition(models.Model):
+  challenge = models.ManyToManyField("Challenges")
+  challenger = models.ForeignKey(User, on_delete=models.CASCADE, related_name="challenger")
+  opponent = models.ForeignKey(User, on_delete=models.CASCADE, related_name="opponent")
+  created = models.DateTimeField(auto_now_add=True)
+
+  class Meta:
+    ordering = ['created']
+
+  def __str__(self):
+    return f'competition between user {self.challenger.username} and {self.opponent.username}'
+
+class Points(models.Model):
+  points = models.IntegerField()
+  created = models.DateTimeField(auto_now_add=True)
+  user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_points")
+
+  class Meta:
+    ordering = ['created']
+
+  def __str__(self):
+    return f'user {self.user.username} has {self.points} points'
+
+class FriendRequest(models.Model):
+    """Class that enables a connection between two users."""
+    from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(User, related_name='to_user', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['id']
+
+    def __str__(self):
+        return f'{self.from_user} wants to befriend {self.to_user}.'
+  
