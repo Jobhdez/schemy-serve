@@ -166,7 +166,6 @@ def user_challenges(request):
   return Response(ChallengesSerializer(challenges, many=True).data)
   
 #to do
-# challenge_detail
 # challege_delete
 
 @api_view(['POST'])
