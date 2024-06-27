@@ -44,3 +44,11 @@ class ProblemForm(forms.Form):
 class SchemeAppForm(forms.Form):
   app_id = forms.CharField()
   username = forms.CharField()
+
+
+class RequestFriendForm(forms.Form):
+    
+    username = forms.CharField()
+
+class AcceptForm(forms.Form):
+    username = forms.CharField()
