@@ -96,4 +96,16 @@ class FriendRequest(models.Model):
 
     def __str__(self):
         return f'{self.from_user} wants to befriend {self.to_user}.'
+
+
+class CompetitionRequest(models.Model):
+    """Class that enables a connection between two users."""
+    from_user = models.ForeignKey(User, related_name='compete_from_user', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(User, related_name='compete_to_user', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['id']
+
+    def __str__(self):
+        return f'{self.from_user} wants to compete with {self.to_user}.'
   
