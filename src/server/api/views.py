@@ -6,6 +6,7 @@ from .models import (
   ProblemStatement,
   Solution,
   SchemeApp,
+  FriendRequest,
   )
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -23,6 +24,8 @@ from .forms import (
     ChallengesForm,
     ProblemForm,
     SchemeAppForm,
+    RequestFriendForm,
+    AcceptForm,
     )
 from .serializers import (
   SchemeInterpSerializer,
@@ -204,4 +207,47 @@ def get_app_users(request, app_id):
     serializer = UserSerializer(app.users, many=True)
     return Response(serializer.data)
   return Response({"failure": "you need to be the owner"}, status=303)
+
+## workflow for competition between you and one of your friends
+## you go on the web site and you send a request to a game/challenge
+## for this you need to pick a challenge. who ever solves more problems
+## within a challenge wins and gets rewards five points. then there will be public listing of the users with more points
+
+@api_view(['POST'])
+@login_required(login_url='/api/login/')
+@csrf_exempt
+def request_friend(request):
+    form = RequestFriendForm(request.POST)
+    if form.is_valid():
+        cd = form.cleaned_data  
+        from_user = request.user
+        to_user = User.objects.get(username=cd['username'])
+        friend_request, created = FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
+        from_user_username = from_user.username
+        to_user_username = to_user.username
+        friend_request_sent.delay(from_user_username, to_user_username)
+        if created:
+            return Response({'request': 'sent'})
+        else:
+            return Response({'request': 'was sent already'})
+
+@api_view(['POST'])
+@login_required(login_url='/api/login/')
+@csrf_exempt
+def accept_friend_request(request):
+    form = AcceptForm(request.POST)
+    if form.is_valid():
+        cd = form.cleaned_data
+        accepted_user = User.objects.get(username=cd['username'])
+        friend_request = FriendRequest.objects.get(from_user=accepted_user, to_user=request.user)
+        if friend_request.to_user == request.user:
+            friend_request.to_user.friends.add(friend_request.from_user)
+            friend_request.from_user.friends.add(friend_request.to_user)
+            create_action(request.user, 'is friends with', accepted_user)
+            friend_request.delete()
+
+            return Response({"accept": "request"})
+        else:
+            return Response({"request":"not accepted"})
+
 
