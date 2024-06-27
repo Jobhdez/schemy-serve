@@ -155,6 +155,9 @@ def challenge_listing(request):
   serializer = ChallengesSerializer(challenges, many=True)
   return Response(serializer.data)
 
+def challenge_detail(request, id):
+  return Response(ChallengesSerializer(Challeges.objects.get(id=id)).data)
+
 @api_view(['GET'])
 @login_required(login_url='/api/login')
 def user_challenges(request):
@@ -198,3 +201,4 @@ def get_app_users(request, app_id):
     serializer = UserSerializer(app.users, many=True)
     return Response(serializer.data)
   return Response({"failure": "you need to be the owner"}, status=303)
+
