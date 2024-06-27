@@ -50,5 +50,9 @@ class RequestFriendForm(forms.Form):
     
     username = forms.CharField()
 
+class RequestCompetitionForm(forms.Form):
+    
+    username = forms.CharField()
+    
 class AcceptForm(forms.Form):
     username = forms.CharField()
