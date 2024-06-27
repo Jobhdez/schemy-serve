@@ -213,6 +213,12 @@ def get_app_users(request, app_id):
 ## for this you need to pick a challenge. who ever solves more problems
 ## within a challenge wins and gets rewards five points. then there will be public listing of the users with more points
 
+# def request_competition
+# def accept_competition
+# def competition_winner
+
+# i need to asynchronously send notifications such as `5+ (points)` and also for friend requests 
+
 @api_view(['POST'])
 @login_required(login_url='/api/login/')
 @csrf_exempt
