@@ -274,8 +274,8 @@ def request_competition(request):
         #friend_request_sent.delay(from_user_username, to_user_username)
         if created:
             return Response({'request': 'sent'})
-        else:
-            return Response({'request': 'was sent already'})
+        
+        return Response({'request': 'was sent already'})
 
 
 @api_view(['POST'])
