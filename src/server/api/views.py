@@ -236,8 +236,8 @@ def request_friend(request):
         #friend_request_sent.delay(from_user_username, to_user_username)
         if created:
             return Response({'request': 'sent'})
-        else:
-            return Response({'request': 'was sent already'})
+        
+        return Response({'request': 'was sent already'})
 
 @api_view(['POST'])
 @login_required(login_url='/api/login/')
@@ -255,8 +255,8 @@ def accept_friend_request(request):
             friend_request.delete()
 
             return Response({"accept": "request"})
-        else:
-            return Response({"request":"not accepted"})
+        
+        return Response({"request":"not accepted"})
 
 
 @api_view(['POST'])
