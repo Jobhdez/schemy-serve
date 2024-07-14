@@ -269,9 +269,6 @@ def request_competition(request):
         from_user = request.user
         to_user = User.objects.get(username=cd['username'])
         friend_request, created = CompetitionRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
-        #from_user_username = from_user.username
-        #to_user_username = to_user.username
-        #friend_request_sent.delay(from_user_username, to_user_username)
         if created:
             return Response({'request': 'sent'})
         
