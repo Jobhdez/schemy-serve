@@ -233,10 +233,8 @@ def request_friend(request):
         friend_request, created = FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
         from_user_username = from_user.username
         to_user_username = to_user.username
-        #friend_request_sent.delay(from_user_username, to_user_username)
         if created:
             return Response({'request': 'sent'})
-        
         return Response({'request': 'was sent already'})
 
 @api_view(['POST'])
@@ -251,11 +249,8 @@ def accept_friend_request(request):
         if friend_request.to_user == request.user:
             friend_request.to_user.friends.add(friend_request.from_user)
             friend_request.from_user.friends.add(friend_request.to_user)
-            create_action(request.user, 'is friends with', accepted_user)
             friend_request.delete()
-
             return Response({"accept": "request"})
-        
         return Response({"request":"not accepted"})
 
 
@@ -270,11 +265,11 @@ def request_competition(request):
         to_user = User.objects.get(username=cd['username'])
         friend_request, created = CompetitionRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
         if created:
-            return Response({'request': 'sent'})
-        
+            return Response({'request': 'sent'})        
         return Response({'request': 'was sent already'})
 
-
+# todo
+"""
 @api_view(['POST'])
 @login_required(login_url='/api/login/')
 @csrf_exempt
@@ -292,3 +287,4 @@ def accept_competition_request(request):
             return Response({"accept": "request"})
         return Response({"request":"not accepted"})
     return Response({"form": "invalid"})
+"""
