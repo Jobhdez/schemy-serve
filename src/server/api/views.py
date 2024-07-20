@@ -48,9 +48,7 @@ def register(request):
         data = form.cleaned_data
         new_user.set_password(data['password'])
         new_user.save()
-
         return Response({'account':'created'})
-
     return Response({'form':'invalid'})
 
 @api_view(['POST'])
@@ -134,7 +132,6 @@ def challenge(request):
     challenge.save()
     user = request.user 
     user.challenges.add(challenge)
-
     user.save()
     return Response({"challenge": "created"}, status=200)
 
@@ -197,13 +194,11 @@ def add_user_to_app(request):
       app.save()
       return Response({"success": "user added to app"}, status=200)
     return Response({"failure":"you need to be the owner of the app"}, status=303)
-
   return Response({"form":"invalid"})
 
 @api_view(['GET'])
 @login_required(login_url='/api/login')
-def get_app_users(request, app_id):
-                                  
+def get_app_users(request, app_id):                                  
   app = SchemeApp.objects.get(id=app_id)
   if app.owner == request.user:
     serializer = UserSerializer(app.users, many=True)
