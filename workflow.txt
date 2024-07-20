@@ -1,6 +1,10 @@
-== Linear algebra to C compiler ==
+== workflow ==
+* user #1: startup hiring manager
+as a user I want to integrate a Scheme interpreter engine into my app. Why? I run a startup and I need to test how well the candidates for a given job know Scheme. So, the Scheme engine
+will help me interview candidate. As a user I want to be able to make challenges and have the candiate answer the challenges.
 
-User stories, i.e. user requirements (needs + wants)
-    As a user I want to generate a c linear algebra function from
-    a high level description so that i can have better performance and
-    not have to learn C.
+* # user #2
+As a user I want to learn Scheme so I want to search for challenges that were created by other users. And as a user who wants to learn Scheme, I would like to invite my friends to take the challenge
+with me.
+
+
