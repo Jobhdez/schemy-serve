@@ -4,15 +4,12 @@ def flatten_exps(node):
     expressions = []
     match node:
         case Exps(e):
-            return flatten_exps(e)
-            
+            return flatten_exps(e)    
         case [*exps]:
             for exp in exps:
                 expressions.extend(flatten_exps(exp))
-        
         case _:
             expressions.append(node)
-
     return expressions
 
 def flatten_params(params):
@@ -25,5 +22,4 @@ def flatten_params(params):
                     unnested_params.extend(flattened_parm)
         case _:
             unnested_params.append(params)
-
     return unnested_params
