@@ -21,6 +21,7 @@ from .nodes import (
 from .utils import flatten_params, flatten_exps
 import operator as op
 
+# this Env class  and the procecure class and the standard env impl were taken from Peter Norvig's Scheme interpreter.
 class Env(dict):
     def __init__(self, params=(), args=(), outer=None):
         self.update(zip(params, args))
