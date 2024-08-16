@@ -258,7 +258,7 @@ def request_competition(request):
         cd = form.cleaned_data  
         from_user = request.user
         to_user = User.objects.get(username=cd['username'])
-        friend_request, created = CompetitionRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
+        _, created = CompetitionRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
         if created:
             return Response({'request': 'sent'})        
         return Response({'request': 'was sent already'})
